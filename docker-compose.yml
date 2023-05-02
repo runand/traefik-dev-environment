@@ -2,7 +2,7 @@ version: '3'
 
 services:
   reverse-proxy:
-    image: traefik:v2.5
+    image: traefik:v2.9
     container_name: traefik
     restart: unless-stopped
     security_opt:
@@ -11,6 +11,7 @@ services:
       # Web
       - 80:80
       - 443:443
+      - 8080:8080
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       # Map the static configuration into the container
@@ -20,8 +21,8 @@ services:
       # Map the certificats into the container
       - ./certs:/etc/certs:ro
     networks:
-      - proxy
+      - web
 
 networks:
-  proxy:
+  web:
     external: true
